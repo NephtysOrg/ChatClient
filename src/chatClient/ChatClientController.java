@@ -38,7 +38,6 @@ public class ChatClientController {
     
     public void connect(){
         if (true){ //Supposed to be connected
-            System.out.println("Login reussi");
             this._chatClientView.setUserId(userId);
             //recuperer la liste des groupes au quel l'user appartient
             //descactiver les champs de connection username, password et le boutton login (excepté le bouton logout)
@@ -46,14 +45,16 @@ public class ChatClientController {
             
             this._chatClientModel.init(this._chatClientView.getUserId());
             Iterator it = grouplist.iterator();
-            while(it.hasNext()){         
-                this._chatClientView.addEntryToGroupList((String)it.next());
+            while(it.hasNext()){
+                String groupname = (String)it.next();
+                this._chatClientView.addEntryToGroupList(groupname);
+                this._chatClientView.addGroupTab(groupname);
             }
             
             //by default open a tab relating to the first group in the list
             this._chatClientView.getGroupsList().setSelectedIndex(0);
             Object o = this._chatClientView.getGroupsList().getModel().getElementAt(0);
-            this._chatClientView.addGroupTab(o.toString());
+            this._chatClientView.setVisibleGroupTab(o.toString());
             
         } else {  //Supposed to be not connected
             System.out.println("you have been disconnect");
@@ -71,6 +72,7 @@ public class ChatClientController {
         String textToSend = this._chatClientView.getInputTextField().getText().trim();
         this._chatClientModel.sendMessage(textToSend,recipientGroup);
         this._chatClientView.getInputTextField().setText("");
+        this._chatClientView.writeOutputMessageLocal(textToSend,recipientGroup);
     }
     
     public void writeOutput(String text,String group){
@@ -83,10 +85,5 @@ public class ChatClientController {
     
     public String retrieveIdentifier(){
         return this._chatClientModel.getIdentifier();
-    }
-    
-    public void newTabChat(){
-        String selectedItem = (String)(this._chatClientView.getGroupsList().getSelectedValue());
-        this._chatClientView.addGroupTab(selectedItem);
     }
 }

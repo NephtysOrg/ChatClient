@@ -90,7 +90,7 @@ public class ChatClientModel extends Thread implements IChat{
         if (msg == null) {
             return "";
         } else {
-            return (String)msg.getSender()+": "+msg.getData();
+            return "["+(String)msg.getSender()+"] "+msg.getData();
         }
     }
     

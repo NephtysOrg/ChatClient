@@ -5,8 +5,8 @@
  */
 package chatClient;
 
-import java.awt.Component;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JPasswordField;
@@ -27,6 +27,7 @@ public class ChatClientView extends JFrame {
     public ChatClientView(ChatClientController chatClientController) {
         this._chatClientController = chatClientController;
         this.groupsListModel = new javax.swing.DefaultListModel();
+        this.tabs = new ArrayList<>();
         
         try {
                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -63,7 +64,13 @@ public class ChatClientView extends JFrame {
     }
     
     public void addGroupTab(String groupname){
-        this.chatTabbedPane.addTab(groupname,new ChatTab(groupname));
+        this.tabs.add(new ChatTab(groupname));
+    }
+    
+    public void setVisibleGroupTab(String groupname){
+        this.tabs.stream().filter((tab) -> (tab.getGroupName().equals(groupname))).forEach((tab) -> {
+            this.chatTabbedPane.addTab(groupname, tab);
+        });
     }
     
     public JList getGroupsList() {
@@ -73,15 +80,35 @@ public class ChatClientView extends JFrame {
     public JTabbedPane getChatTabbedPane() {
         return chatTabbedPane;
     }
+
+    public ArrayList<ChatTab> getTabs() {
+        return tabs;
+    }
+    
     
     public void writeOutputMessage(String text,String group){
+        /*for (ChatTab tab : this.tabs) {
+            if (tab.getGroupName().equals(group)) {
+                tab.writeOutput(text);
+            }
+        }*/
+        
+        //Seriously what is that ?
+        
+        this.tabs.stream().filter((tab) -> (tab.getGroupName().equals(group))).forEach((tab) -> {
+            tab.writeOutput(text);
+        });
+        
+    }
+    
+    public void writeOutputMessageLocal(String text,String group){
         int nbTab= this.chatTabbedPane.getTabCount();
         for(int i=0;i<nbTab;i++){
             if(this.chatTabbedPane.getTitleAt(i).equals(group)){
-                ((ChatTab)this.chatTabbedPane.getComponentAt(i)).writeOutput(text); 
+                ((ChatTab)this.chatTabbedPane.getComponentAt(i)).writeOutputLocal(text); 
             }
         }
-    }
+    } 
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -302,7 +329,6 @@ public class ChatClientView extends JFrame {
     }                                          
 
     
-    
     //other variables declaration
     private final ChatClientController _chatClientController;                  
     private javax.swing.JPanel chatPanel;
@@ -324,5 +350,6 @@ public class ChatClientView extends JFrame {
       
     private javax.swing.AbstractListModel groupsListModel;
     private String userId;
+    private ArrayList<ChatTab> tabs;
     // End of variables declaration                   
 }

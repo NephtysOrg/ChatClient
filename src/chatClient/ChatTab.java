@@ -15,19 +15,23 @@ public class ChatTab extends JPanel {
     
     /**
      * Creates new form NewJPanelTab
-     * @param tabname
+     * @param groupname
      */
-    public ChatTab(String tabname) {
-        this._tabName = tabname;
+    public ChatTab(String groupname) {
+        this._groupName = groupname;
         initComponents();
     }
     
     public void writeOutput(String outputText){
-        this.jTextArea1.setText( this.jTextArea1.getText()+ "\n" + outputText);
+        this.jTextArea1.setText(this.jTextArea1.getText()+ "\n" + outputText);
     }
     
-    public String getTabName(){
-        return this._tabName;
+    public void writeOutputLocal(String outputText){
+        this.jTextArea1.setText(this.jTextArea1.getText()+ "\n" +"[ Moi ] "+outputText);
+    }
+    
+    public String getGroupName(){
+        return this._groupName;
     }
 
     /**
@@ -64,7 +68,7 @@ public class ChatTab extends JPanel {
     // Variables declaration - do not modify                     
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;        
-    private final String _tabName; //Mean the current group name
+    private final String _groupName; //Mean the current group name
     // End of variables declaration    
   
 }
