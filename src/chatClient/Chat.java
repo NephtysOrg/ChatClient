@@ -13,10 +13,6 @@ import service.IDistributedServices;
 import service.IIdentification;
 import service.IBroadcast;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
 public class Chat extends Thread {
 
     IDistributedServices services;
@@ -45,62 +41,31 @@ public class Chat extends Thread {
         // get the service access points
         commService = services.getCommunicationService();
         idService = services.getIdentificationService();
-        broadcastService = services.getBasicBroadcastService();
+        broadcastService = services.getReliableBroadcastService();
+        broadcastService.initCheckBuffer();
 
         // as we are not directly informed when the process id has been received, wait a short time
         // to be almost sure to have received it when printing the identifier
         try { Thread.sleep(200); } catch(Exception e) { }
         System.out.println("OK, connexion réalisée, je suis : " + idService.getMyIdentifier()+ "\n");
     }
-
-    public void papoter() {
-     
-        String message = null;
-        BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
-
-        while (true) {
-            // read the user entry
-            System.out.println("Votre message ('end' pour finir) :");
-            try {
-                message = input.readLine();
-            } catch (IOException ex) {
-                System.err.println("Erreur pendant la lecture clavier : " + ex);
-                System.exit(2);
-            }
-
-            // if end, disconnect from the system and exit the JVM
-            if (message.equals("end")) {
-                System.out.println("A la prochaine !");
-                services.disconnect();
-                System.exit(0);
-            }
-
-            // brodcast the message
-            try {
-                System.out.print(" --> Envoi message ... ");
-                broadcastService.broadcast(message);
-                System.out.println("done");
-            } catch (CommunicationException ex) {
-                System.err.println(" *** communication problem: " + ex);
-            }
-        }
-    }
-    
-    public void sendMessage(String message,String sender,String recepientGroup){
+ 
+    public void sendMessage(String text,String sender,String recepientGroup){
         //if end, disconnect from the system and exit the JVM
-        if(message.equals("end")){
+        if(text.equals("end")){
             System.out.println("A la prochaine !");
             services.disconnect();
             System.exit(0);
         }
-        
         //broadcast the message
         try{
             System.out.print("--> Envoi message...");
-            broadcastService.broadcast(new Message(idService.getMyIdentifier(),message,sender,recepientGroup));
-            System.out.println("done");
+            Message msg = new Message(idService.getMyIdentifier(),text,sender,recepientGroup);
+            System.out.println(msg.getRecepientGroup());
+            broadcastService.broadcast(msg);
+            System.out.println("Message envoyé");
         }catch (CommunicationException ex){
-            System.err.println("*** Communication problem: "+ ex);
+            System.err.println("*** Probleme de communication: "+ ex);
         }
     }
 
@@ -111,16 +76,9 @@ public class Chat extends Thread {
         while (true) {
             msg = broadcastService.synchDeliver();
             System.out.println("[" + msg.getProcessId().getId() + "] " + msg.getData());
+       
         }
     }
 
-    public void Chat() {
-    }
-
-    /*public static void main(String argv[]) {
-        Chat chat = new Chat();
-        chat.init();
-        chat.start();
-        //chat.papoter();
-    }*/
+    public void Chat() {}
 }

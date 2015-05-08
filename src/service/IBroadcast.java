@@ -35,4 +35,9 @@ public interface IBroadcast {
     * @return <code>true</code> if one received message is available, <code>false</code> otherwise
     */
    boolean availableMessage();
+   
+   /**
+    * 
+    */
+   public void initCheckBuffer();
 }

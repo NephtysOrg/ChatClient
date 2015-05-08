@@ -23,7 +23,7 @@ public class ChatTab extends JPanel {
     }
     
     public void writeOutput(String outputText){
-        this.jTextArea1.append(outputText);
+        this.jTextArea1.setText( this.jTextArea1.getText()+ "\n" + outputText);
     }
     
     public String getTabName(){
@@ -38,12 +38,15 @@ public class ChatTab extends JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
+        
+       
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
+        jTextArea1.setEditable(false);
         jScrollPane1.setViewportView(jTextArea1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

@@ -10,8 +10,8 @@ package chatClient;
  * @author rbary
  */
 public class ChatClientRun {
-    public static void main(String args[]) {
-        ChatClientController chatClientController = new ChatClientController();  
-        chatClientController.launch();
+    public static void main(String args[]) {  
+        ChatClientController chatClientController1 = new ChatClientController();  
+        chatClientController1.launch();
     }
 }

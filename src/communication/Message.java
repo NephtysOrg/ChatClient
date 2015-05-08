@@ -88,16 +88,16 @@ public class Message implements java.io.Serializable {
         this.recepientGroup = recepientGroup;
     }
 
-    /*@Override
+    @Override
     public String toString() {
         return "[ " + processId + " ] -> " + data;
+    }
+    
+    //@Override
+    /*public String toString(){
+        return "[" + processId +"|"+sender+"|"+recepientGroup+"]->"+data;
     }*/
     
-    @Override
-    public String toString(){
-        return "[" + processId +"|"+sender+"|"+recepientGroup+"]->"+data;
-    }
-
     public String getSender() {
         return sender;
     }

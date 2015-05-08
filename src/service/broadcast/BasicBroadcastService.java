@@ -63,4 +63,9 @@ public class BasicBroadcastService extends Service implements IBroadcast {
     public boolean availableMessage() {
         return buffer.available() > 0;
     }
+
+    @Override
+    public void initCheckBuffer() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

@@ -21,10 +21,8 @@ public class ChatClientEvent implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         if(e.getActionCommand().equals("login")){
             this._chatClientController.connect();
-            System.out.println("Bonjour je suis connecte");
         }
         
         if(e.getActionCommand().equals("send")) {
@@ -38,7 +36,6 @@ public class ChatClientEvent implements ActionListener{
         if(e.getActionCommand().equals("help")){
             this._chatClientController.openHelp();
         }
-    
     }
     
 }

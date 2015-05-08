@@ -5,6 +5,7 @@
  */
 package chatClient;
 
+import java.awt.Component;
 import java.awt.event.MouseListener;
 import javax.swing.JFrame;
 import javax.swing.JList;
@@ -71,6 +72,15 @@ public class ChatClientView extends JFrame {
 
     public JTabbedPane getChatTabbedPane() {
         return chatTabbedPane;
+    }
+    
+    public void writeOutputMessage(String text,String group){
+        int nbTab= this.chatTabbedPane.getTabCount();
+        for(int i=0;i<nbTab;i++){
+            if(this.chatTabbedPane.getTitleAt(i).equals(group)){
+                ((ChatTab)this.chatTabbedPane.getComponentAt(i)).writeOutput(text); 
+            }
+        }
     }
 
     /**

@@ -23,13 +23,13 @@ public class ChatClientController {
         add("NephtysOrg");
     }};
     
-    private final String identifier;
+    private final String userId;
     
     
     public ChatClientController(){
         this._chatClientView = new ChatClientView(this);
         this._chatClientModel = new ChatClientModel(this);
-        identifier = "cfollet"; 
+        userId = "ftoulouz"; 
     }
     
     public void launch(){
@@ -39,17 +39,21 @@ public class ChatClientController {
     public void connect(){
         if (true){ //Supposed to be connected
             System.out.println("Login reussi");
-            this._chatClientView.setUserId(identifier);
+            this._chatClientView.setUserId(userId);
             //recuperer la liste des groupes au quel l'user appartient
             //descactiver les champs de connection username, password et le boutton login (excepté le bouton logout)
             //activer la partie chat du jFrame
             
             this._chatClientModel.init(this._chatClientView.getUserId());
             Iterator it = grouplist.iterator();
-            while(it.hasNext()){
-            
+            while(it.hasNext()){         
                 this._chatClientView.addEntryToGroupList((String)it.next());
             }
+            
+            //by default open a tab relating to the first group in the list
+            this._chatClientView.getGroupsList().setSelectedIndex(0);
+            Object o = this._chatClientView.getGroupsList().getModel().getElementAt(0);
+            this._chatClientView.addGroupTab(o.toString());
             
         } else {  //Supposed to be not connected
             System.out.println("you have been disconnect");
@@ -64,10 +68,13 @@ public class ChatClientController {
     public void sendMessage(){
         int selectedIndex = this._chatClientView.getChatTabbedPane().getSelectedIndex();
         String recipientGroup = this._chatClientView.getChatTabbedPane().getTitleAt(selectedIndex);
-        String textToSend = this._chatClientView.getInputTextField().getText();
+        String textToSend = this._chatClientView.getInputTextField().getText().trim();
         this._chatClientModel.sendMessage(textToSend,recipientGroup);
-        
-        System.out.println("Message envoyé ...");
+        this._chatClientView.getInputTextField().setText("");
+    }
+    
+    public void writeOutput(String text,String group){
+        this._chatClientView.writeOutputMessage(text,group);
     }
     
     public void openHelp(){
