@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
  * @author rbary
  */
 public class ChatClientEvent implements ActionListener{
-    ChatClientController _chatClientController;
+    private final ChatClientController _chatClientController;
     
     public ChatClientEvent(ChatClientController chatClientController){
         this._chatClientController = chatClientController;
@@ -21,7 +21,24 @@ public class ChatClientEvent implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(e.getActionCommand().equals("login")){
+            this._chatClientController.connect();
+            System.out.println("Bonjour je suis connecte");
+        }
+        
+        if(e.getActionCommand().equals("send")) {
+            this._chatClientController.sendMessage();
+        }
+        
+        if(e.getActionCommand().equals("input")) {
+            this._chatClientController.sendMessage();
+        }
+        
+        if(e.getActionCommand().equals("help")){
+            this._chatClientController.openHelp();
+        }
+    
     }
     
 }

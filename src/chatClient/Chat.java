@@ -117,10 +117,10 @@ public class Chat extends Thread {
     public void Chat() {
     }
 
-    public static void main(String argv[]) {
+    /*public static void main(String argv[]) {
         Chat chat = new Chat();
         chat.init();
         chat.start();
         //chat.papoter();
-    }
+    }*/
 }

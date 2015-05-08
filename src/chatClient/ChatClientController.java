@@ -18,9 +18,9 @@ public class ChatClientController {
     
     /*en dur */
     ArrayList<String> grouplist = new ArrayList<String>() {{
-        add("G1");
-        add("G2");
-        add("G3");
+        add("M1TI pau");
+        add("FreeNode");
+        add("NephtysOrg");
     }};
     
     private final String identifier;
@@ -47,7 +47,7 @@ public class ChatClientController {
             this._chatClientModel.init(this._chatClientView.getUserId());
             Iterator it = grouplist.iterator();
             while(it.hasNext()){
-                //this._chatClientView.addGroupTab((String)it.next());
+            
                 this._chatClientView.addEntryToGroupList((String)it.next());
             }
             
@@ -62,7 +62,12 @@ public class ChatClientController {
     }
     
     public void sendMessage(){
-        //this._chatClientModel.sendMessage(this._chatClientView.getInputTextField().getText(),);
+        int selectedIndex = this._chatClientView.getChatTabbedPane().getSelectedIndex();
+        String recipientGroup = this._chatClientView.getChatTabbedPane().getTitleAt(selectedIndex);
+        String textToSend = this._chatClientView.getInputTextField().getText();
+        this._chatClientModel.sendMessage(textToSend,recipientGroup);
+        
+        System.out.println("Message envoyé ...");
     }
     
     public void openHelp(){
