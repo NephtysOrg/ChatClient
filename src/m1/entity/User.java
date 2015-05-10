@@ -77,10 +77,6 @@ public class User  implements java.io.Serializable {
     public void setUserGroups(Set userGroups) {
         this.userGroups = userGroups;
     }
-
-
-
-
 }
 
 

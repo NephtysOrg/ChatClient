@@ -6,11 +6,20 @@
 package chatClient;
 
 import communication.Message;
+import dao.UserDAO;
+import dao.UserDAOImpl;
+import dao.UserGroupDAO;
+import dao.UserGroupDAOImpl;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import m1.entity.Group;
+import m1.entity.User;
+import m1.entity.UserGroup;
 import service.IChat;
+
 
 
 /**
@@ -21,15 +30,16 @@ public class ChatClientModel extends Thread implements IChat{
     private final ChatClientController _chatClientController;
     private Chat _chat;
     private String _identifier;
-    private final String[] _groups;
+    private ArrayList<String> _groups;
+    private final UserDAO _userDAO;
+    private final UserGroupDAO _userGroupDAO;
     private HashMap<String, LinkedList<Message> > _waitingMessage;
     
     public ChatClientModel(ChatClientController chatClientController){
         this._chatClientController = chatClientController;
-        _groups = new String[3];
-        _groups[0]="M1TI pau";
-        _groups[1]="FreeNode";
-        _groups[2]="NephtysOrg";
+        this._userDAO = new UserDAOImpl();
+        this._userGroupDAO = new UserGroupDAOImpl();
+        _groups = new ArrayList<>();
     }
     
     public void init(String identifier){
@@ -41,10 +51,10 @@ public class ChatClientModel extends Thread implements IChat{
     public void run(){
         this._chat = new Chat();
         this._chat.init(); 
-        /*this._groupes = getGroupes();*/
+        this._groups = getGroupNames();
         this._waitingMessage = new HashMap<>();
-        for (String unGroupe : this._groups) {
-            this._waitingMessage.put(unGroupe, new LinkedList<Message>());
+        for (String aGroup : this._groups) {
+            this._waitingMessage.put(aGroup, new LinkedList<Message>());
         }
         
         while (true) {
@@ -65,10 +75,10 @@ public class ChatClientModel extends Thread implements IChat{
     public String getIdentifier() {
         return this._identifier;
     }
-    
+   
     @Override
     public boolean connection(String login, String password){
-        return true;
+        return _userDAO.connection(login, password);
     }
     
     @Override
@@ -79,10 +89,20 @@ public class ChatClientModel extends Thread implements IChat{
         this._chat.services.disconnect();
     }
 
-    /*public String[] getGroups() {
-        ArrayList<String> groups = new ArrayList<> ();
-        //Retourner la liste des groupes auquel l'identifiant courant appartient dans la bd
-    }*/
+    public ArrayList<String> getGroupNames() { //Means the name of groups and not all the entity group
+        ArrayList<String> groupNames = new ArrayList<>();
+        try {
+            //Iterator it = (Iterator) this.getMemberGroups(getUserFromUserDaoImpl());
+            Iterator it = (Iterator) this.getUserFromUserDaoImpl().getGroups();
+            while (it.hasNext()){
+                groupNames.add(((Group)it.next()).getName());
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }    
+        return groupNames;
+    }
+    
    
     @Override
     public String getNextMessageIncomming(String group){
@@ -97,5 +117,28 @@ public class ChatClientModel extends Thread implements IChat{
     @Override
     public void sendMessage(String text, String group) {
         this._chat.sendMessage(text,this._identifier,group);
+    }
+    
+    public User getUserFromUserDaoImpl(){
+        return this._userDAO.getUser();
+    }
+    
+    public List<Group> getMemberGroups(User user) {
+        List <UserGroup> listUserGroup = this._userGroupDAO.listUserGroups();
+        List<Group> groups = new ArrayList<>();
+        for (UserGroup ug : listUserGroup) {
+            if(!ug.getGroup().getUser().getId().equals(user.getId()) && ug.getUser().getId().equals(user.getId()) && ug.getSubscribed()== 0 && ug.getInvited()== 0){
+                groups.add(ug.getGroup());
+            }
+        }
+        return groups;
+    }
+
+    public ArrayList<String> getGroups() {
+        return _groups;
+    }
+
+    public void setGroups(ArrayList<String> _groups) {
+        this._groups = _groups;
     }
 }

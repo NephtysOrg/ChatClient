@@ -51,14 +51,6 @@ public class ChatClientView extends JFrame {
         return usernameTextField;
     }
 
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
     public void addEntryToGroupList(String groupname){
         ((javax.swing.DefaultListModel)this.groupsList.getModel()).addElement(groupname);
     }
@@ -349,7 +341,6 @@ public class ChatClientView extends JFrame {
     private javax.swing.JTextField usernameTextField;
       
     private javax.swing.AbstractListModel groupsListModel;
-    private String userId;
     private ArrayList<ChatTab> tabs;
     // End of variables declaration                   
 }

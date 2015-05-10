@@ -7,6 +7,10 @@ package chatClient;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
+import javax.swing.JOptionPane;
+import m1.entity.Group;
+
 
 /**
  *
@@ -15,21 +19,12 @@ import java.util.Iterator;
 public class ChatClientController {
     private final ChatClientView _chatClientView;
     private final ChatClientModel _chatClientModel;
-    
-    /*en dur */
-    ArrayList<String> grouplist = new ArrayList<String>() {{
-        add("M1TI pau");
-        add("FreeNode");
-        add("NephtysOrg");
-    }};
-    
-    private final String userId;
-    
+    private String _userId;
     
     public ChatClientController(){
         this._chatClientView = new ChatClientView(this);
         this._chatClientModel = new ChatClientModel(this);
-        userId = "ftoulouz"; 
+        this._userId = new String();
     }
     
     public void launch(){
@@ -37,16 +32,20 @@ public class ChatClientController {
     }
     
     public void connect(){
-        if (true){ //Supposed to be connected
-            this._chatClientView.setUserId(userId);
-            //recuperer la liste des groupes au quel l'user appartient
-            //descactiver les champs de connection username, password et le boutton login (excepté le bouton logout)
-            //activer la partie chat du jFrame
+        if(this._chatClientModel.connection(this._chatClientView.getUsernameTextField().getText(),new String(this._chatClientView.getPasswordField().getPassword()))){
+            this._userId = this._chatClientView.getUsernameTextField().getText();
+            System.out.println("Je me suis connecté");
+            this._chatClientModel.init(_userId);
+            ArrayList<String> groups = this._chatClientModel.getGroups();
             
-            this._chatClientModel.init(this._chatClientView.getUserId());
-            Iterator it = grouplist.iterator();
+            
+        
+            /*//desactiver les champs de connection username, password et le boutton login (excepté le bouton logout)
+            //activer la partie chat du jFrame          
+            Iterator it = groupnames.iterator();
             while(it.hasNext()){
-                String groupname = (String)it.next();
+                String groupname = (String) it.next();
+                System.out.println(groupname);
                 this._chatClientView.addEntryToGroupList(groupname);
                 this._chatClientView.addGroupTab(groupname);
             }
@@ -54,10 +53,14 @@ public class ChatClientController {
             //by default open a tab relating to the first group in the list
             this._chatClientView.getGroupsList().setSelectedIndex(0);
             Object o = this._chatClientView.getGroupsList().getModel().getElementAt(0);
-            this._chatClientView.setVisibleGroupTab(o.toString());
+            this._chatClientView.setVisibleGroupTab(o.toString());*/
             
-        } else {  //Supposed to be not connected
-            System.out.println("you have been disconnect");
+        }else{
+            System.out.println("Identifiants incorrects");
+            JOptionPane.showMessageDialog(_chatClientView,
+                    "Erreur de connexion",
+                    "Les informations saisies sont erronées",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
     
