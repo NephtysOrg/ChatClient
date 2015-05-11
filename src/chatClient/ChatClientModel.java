@@ -39,10 +39,6 @@ public class ChatClientModel extends Thread implements IChat{
         this._userDAO = new UserDAOImpl();
         this._userGroupDAO = new UserGroupDAOImpl();
         _groups = new ArrayList<>();
-        
-        /*this._groups.add("M1TI Pau");
-        this._groups.add("FreeNode");
-        this._groups.add("NephtysOrg");*/
     }
     
     public void init(String identifier){
@@ -56,11 +52,6 @@ public class ChatClientModel extends Thread implements IChat{
         this._chat.init();
         this._groups = this._userDAO.getMemberGroupsName();
         
-        
-        System.out.println("Taille : "+_groups.size());
-        for (String _group : _groups) {
-            System.out.println(_group);
-        }
         
         this._waitingMessage = new HashMap<>();
         
@@ -95,7 +86,7 @@ public class ChatClientModel extends Thread implements IChat{
     @Override
     public void disconnection(){
         for(String aGroup : this._groups){
-            sendMessage("A Bientôt !", aGroup);
+            sendMessage("Adishatz je rentre dans le gers!", aGroup);
         }
         this._chat.services.disconnect();
     }

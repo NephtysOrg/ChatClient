@@ -7,6 +7,8 @@ package chatClient;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -22,11 +24,19 @@ public class ChatClientEvent implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getActionCommand().equals("login")){
-            this._chatClientController.connect();
+            try {
+                this._chatClientController.connect();
+            } catch (InterruptedException ex) {
+                Logger.getLogger(ChatClientEvent.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         
         if(e.getActionCommand().equals("send")) {
             this._chatClientController.sendMessage();
+        }
+        
+        if(e.getActionCommand().equals("logout")){
+            this._chatClientController.disconnect();
         }
         
         if(e.getActionCommand().equals("input")) {

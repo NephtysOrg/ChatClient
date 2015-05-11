@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTabbedPane;
@@ -32,21 +33,27 @@ public class ChatClientView extends JFrame {
         this._chatClientController = chatClientController;
         this.groupsListModel = new javax.swing.DefaultListModel();
         this.tabs = new ArrayList<>();
-        
-       /*try {
-                //UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        this.helpText = "1. If you do not have an account please create a user \n" +
+                        "accountfrom the web service Chat ++\n" +
+                        "2. You can create , join chat groups for this service\n" +
+                        "3. Inquire credentials in the respective fields and then\n"+
+                        "click Login or press the enter key\n" +
+                        "4. If you belong to the focus groups,a list of these groups will be displayed\n" +
+                        "5. Interact with this list to access the different chat room";
+       try {
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
                 //UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
-                UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+                //UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
                 
             
                 } catch (ClassNotFoundException ex) {
                 } catch (InstantiationException ex) {
                 } catch (IllegalAccessException ex) {
                 } catch (UnsupportedLookAndFeelException ex) {
-                }*/
+                }
       
         // OR more robust codes
-        try {
+        /*try {
            // Check if Nimbus is supported and get its classname
            for (UIManager.LookAndFeelInfo lafInfo : UIManager.getInstalledLookAndFeels()) {
               if ("Nimbus".equals(lafInfo.getName())) {
@@ -60,7 +67,7 @@ public class ChatClientView extends JFrame {
               UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e1) {
            }
-        }
+        }*/
     
         initComponents();
     }
@@ -91,6 +98,15 @@ public class ChatClientView extends JFrame {
         });
     }
     
+    public boolean checkTabComponent(String groupname){
+        boolean result = false;
+        if (this.chatTabbedPane.indexOfTab(groupname)!=-1) {
+            result = true;
+        }
+        
+        return result;
+    }
+  
     public JList getGroupsList() {
         return groupsList;
     }
@@ -116,6 +132,29 @@ public class ChatClientView extends JFrame {
         this.passwordField.setEnabled(false);
         this.loginButton.setEnabled(false);
     }
+    
+    public void showNotification(String title,String notification,String notificationType){
+        if(notificationType.equals("error")){
+            JOptionPane.showMessageDialog(this,notification,title,JOptionPane.ERROR_MESSAGE);
+        }
+        
+        if(notificationType.equals("notify")){
+            JOptionPane.showMessageDialog(this,notification,title,JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+    
+    public void openHelp(){
+        JOptionPane.showMessageDialog(this, 
+    this.helpText, 
+    "Help", 
+    JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    public void clearChatPanel(){
+        this.chatTabbedPane.removeAll();
+        this.tabs.clear();
+        ((javax.swing.DefaultListModel)this.groupsList.getModel()).removeAllElements();
+    }
 
     public void writeOutputMessage(String text,String group){
         /*for (ChatTab tab : this.tabs) {
@@ -123,9 +162,7 @@ public class ChatClientView extends JFrame {
                 tab.writeOutput(text);
             }
         }*/
-        
         //Seriously what is that ?
-        
         this.tabs.stream().filter((tab) -> (tab.getGroupName().equals(group))).forEach((tab) -> {
             tab.writeOutput(text);
         });
@@ -381,5 +418,6 @@ public class ChatClientView extends JFrame {
       
     private javax.swing.AbstractListModel groupsListModel;
     private ArrayList<ChatTab> tabs;
+    private String helpText;
     // End of variables declaration                   
 }

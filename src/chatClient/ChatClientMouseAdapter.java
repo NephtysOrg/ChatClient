@@ -27,10 +27,11 @@ public class ChatClientMouseAdapter extends MouseAdapter {
             int index = theList.locationToIndex(mouseEvent.getPoint());
             if (index >= 0) {
                 Object o = theList.getModel().getElementAt(index);
-                //il faudra verifier si l'onglet n'est pas deja ajoute
-                this._chatClientView.setVisibleGroupTab(o.toString());
-                //System.out.println("Double-clicked on: " + o.toString());
-                        
+                
+                if(!this._chatClientView.checkTabComponent(o.toString())){
+                    this._chatClientView.setVisibleGroupTab(o.toString());
+                }
+                this._chatClientView.getChatTabbedPane().setSelectedIndex(index);           
             }
         }   
     }
