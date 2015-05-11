@@ -22,8 +22,8 @@ public class ChatScenario {
         }
         
         //Lancement d'un premier client
-        ChatClientController chatClientController1 = new ChatClientController();  
-        chatClientController1.launch();
+        /*ChatClientController chatClientController1 = new ChatClientController();  
+        chatClientController1.launch();*/
         
         //Lancement d'un deuxieme client
         ChatClientController chatClientController2 = new ChatClientController();

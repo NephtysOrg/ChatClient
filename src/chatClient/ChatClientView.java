@@ -5,15 +5,19 @@
  */
 package chatClient;
 
+import java.awt.Color;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.plaf.ColorUIResource;
 
 /**
  *
@@ -29,13 +33,35 @@ public class ChatClientView extends JFrame {
         this.groupsListModel = new javax.swing.DefaultListModel();
         this.tabs = new ArrayList<>();
         
-        try {
-                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+       /*try {
+                //UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                //UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+                UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+                
+            
                 } catch (ClassNotFoundException ex) {
                 } catch (InstantiationException ex) {
                 } catch (IllegalAccessException ex) {
                 } catch (UnsupportedLookAndFeelException ex) {
-                } 
+                }*/
+      
+        // OR more robust codes
+        try {
+           // Check if Nimbus is supported and get its classname
+           for (UIManager.LookAndFeelInfo lafInfo : UIManager.getInstalledLookAndFeels()) {
+              if ("Nimbus".equals(lafInfo.getName())) {
+                 UIManager.setLookAndFeel(lafInfo.getClassName());
+                 break;
+              }
+           }
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+           try {
+              // If Nimbus is not available, set to the default Java (metal) look and feel
+              UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+           } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e1) {
+           }
+        }
+    
         initComponents();
     }
     
@@ -76,8 +102,21 @@ public class ChatClientView extends JFrame {
     public ArrayList<ChatTab> getTabs() {
         return tabs;
     }
+
+    public JButton getLoginButton() {
+        return loginButton;
+    }
+
+    public JButton getLogoutButton() {
+        return logoutButton;
+    }
     
-    
+    public void disableConnexionPanel(){
+        this.usernameTextField.setEnabled(false);
+        this.passwordField.setEnabled(false);
+        this.loginButton.setEnabled(false);
+    }
+
     public void writeOutputMessage(String text,String group){
         /*for (ChatTab tab : this.tabs) {
             if (tab.getGroupName().equals(group)) {

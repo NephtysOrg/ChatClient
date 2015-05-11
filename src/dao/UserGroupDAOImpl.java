@@ -5,8 +5,11 @@
  */
 package dao;
 
+import com.mysql.jdbc.Util;
+import com.sun.corba.se.impl.util.Utility;
 import java.util.List;
 import m1.entity.UserGroup;
+import m1.util.HibernateUtil;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -22,14 +25,20 @@ public class UserGroupDAOImpl implements UserGroupDAO {
     @Override
     public List<UserGroup> listUserGroups() {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            Configuration configuration = new Configuration();
+            /*Configuration configuration = new Configuration();
             configuration.configure("hibernate.cfg.xml");
             StandardServiceRegistryBuilder ssrb = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
-            SessionFactory sessionFactory = configuration.buildSessionFactory(ssrb.build());
-            Session session = sessionFactory.openSession();
-            
-            List<UserGroup> userGroupList = session.createQuery("from UserGroup order by member_since desc").list();
+            SessionFactory sessionFactory = configuration.buildSessionFactory(ssrb.build());*/
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            List<UserGroup> userGroupList = null;
+            try{
+                userGroupList = session.createQuery("from UserGroup order by member_since desc").list();
+                   
+            }catch(Exception e){
+                e.printStackTrace();
+            }
             session.close();
-            return userGroupList;  
+            return userGroupList;
+           
     } 
 }

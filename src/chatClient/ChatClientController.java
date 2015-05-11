@@ -6,10 +6,8 @@
 package chatClient;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import javax.swing.JOptionPane;
-import m1.entity.Group;
 
 
 /**
@@ -20,8 +18,16 @@ public class ChatClientController {
     private final ChatClientView _chatClientView;
     private final ChatClientModel _chatClientModel;
     private String _userId;
+
+    List<String> _groupnames;
     
     public ChatClientController(){
+        /*this.groupnames = new ArrayList<String>() {{
+            add("M1TI Pau");
+            add("FreeNode");
+            add("NephtysOrg");
+        }};*/
+        this._groupnames = new ArrayList<>();
         this._chatClientView = new ChatClientView(this);
         this._chatClientModel = new ChatClientModel(this);
         this._userId = new String();
@@ -31,35 +37,28 @@ public class ChatClientController {
         this._chatClientView.setVisible(true);
     }
     
-    public void connect(){
+    public void connect() throws InterruptedException{
         if(this._chatClientModel.connection(this._chatClientView.getUsernameTextField().getText(),new String(this._chatClientView.getPasswordField().getPassword()))){
             this._userId = this._chatClientView.getUsernameTextField().getText();
-            System.out.println("Je me suis connecté");
             this._chatClientModel.init(_userId);
-            ArrayList<String> groups = this._chatClientModel.getGroups();
+            this._groupnames = this._chatClientModel.getUserDAO().getMemberGroupsName();
+
             
-            
-        
-            /*//desactiver les champs de connection username, password et le boutton login (excepté le bouton logout)
-            //activer la partie chat du jFrame          
-            Iterator it = groupnames.iterator();
-            while(it.hasNext()){
-                String groupname = (String) it.next();
-                System.out.println(groupname);
+            for (String groupname : _groupnames) {
+                System.out.println("Controller : "+groupname);
                 this._chatClientView.addEntryToGroupList(groupname);
                 this._chatClientView.addGroupTab(groupname);
             }
-            
             //by default open a tab relating to the first group in the list
             this._chatClientView.getGroupsList().setSelectedIndex(0);
             Object o = this._chatClientView.getGroupsList().getModel().getElementAt(0);
-            this._chatClientView.setVisibleGroupTab(o.toString());*/
+            this._chatClientView.setVisibleGroupTab(o.toString());
             
         }else{
             System.out.println("Identifiants incorrects");
             JOptionPane.showMessageDialog(_chatClientView,
                     "Erreur de connexion",
-                    "Les informations saisies sont erronées",
+                    "Information eronnées",
                     JOptionPane.ERROR_MESSAGE);
         }
     }

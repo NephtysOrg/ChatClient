@@ -1,5 +1,5 @@
 package m1.entity;
-// Generated 29 avr. 2015 23:23:16 by Hibernate Tools 4.3.1
+// Generated 10 mai 2015 22:43:48 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -21,9 +21,7 @@ public class User  implements java.io.Serializable {
     public User() {
     }
 
-	
-    public User(Location location, String login, String password) {
-        this.location = location;
+    public User(String login, String password) {
         this.login = login;
         this.password = password;
     }
@@ -77,6 +75,10 @@ public class User  implements java.io.Serializable {
     public void setUserGroups(Set userGroups) {
         this.userGroups = userGroups;
     }
+
+
+
+
 }
 
 

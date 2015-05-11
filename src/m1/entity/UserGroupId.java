@@ -1,5 +1,5 @@
 package m1.entity;
-// Generated 29 avr. 2015 23:23:16 by Hibernate Tools 4.3.1
+// Generated 10 mai 2015 22:43:48 by Hibernate Tools 4.3.1
 
 
 

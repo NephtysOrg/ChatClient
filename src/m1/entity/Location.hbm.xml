@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 29 avr. 2015 23:23:17 by Hibernate Tools 4.3.1 -->
+<!-- Generated 10 mai 2015 22:43:49 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="m1.entity.Location" table="location" catalog="m1" optimistic-lock="version">
         <id name="id" type="java.lang.Integer">
@@ -13,7 +13,7 @@
         </property>
         <set name="users" table="user" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="location" not-null="true" />
+                <column name="location" />
             </key>
             <one-to-many class="m1.entity.User" />
         </set>

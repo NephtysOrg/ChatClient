@@ -12,7 +12,6 @@ import dao.UserGroupDAO;
 import dao.UserGroupDAOImpl;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import m1.entity.Group;
@@ -30,9 +29,9 @@ public class ChatClientModel extends Thread implements IChat{
     private final ChatClientController _chatClientController;
     private Chat _chat;
     private String _identifier;
-    private ArrayList<String> _groups;
-    private final UserDAO _userDAO;
-    private final UserGroupDAO _userGroupDAO;
+    private List<String> _groups;
+    private UserDAO _userDAO;
+    private UserGroupDAO _userGroupDAO;
     private HashMap<String, LinkedList<Message> > _waitingMessage;
     
     public ChatClientModel(ChatClientController chatClientController){
@@ -40,6 +39,10 @@ public class ChatClientModel extends Thread implements IChat{
         this._userDAO = new UserDAOImpl();
         this._userGroupDAO = new UserGroupDAOImpl();
         _groups = new ArrayList<>();
+        
+        /*this._groups.add("M1TI Pau");
+        this._groups.add("FreeNode");
+        this._groups.add("NephtysOrg");*/
     }
     
     public void init(String identifier){
@@ -50,9 +53,17 @@ public class ChatClientModel extends Thread implements IChat{
     @Override
     public void run(){
         this._chat = new Chat();
-        this._chat.init(); 
-        this._groups = getGroupNames();
+        this._chat.init();
+        this._groups = this._userDAO.getMemberGroupsName();
+        
+        
+        System.out.println("Taille : "+_groups.size());
+        for (String _group : _groups) {
+            System.out.println(_group);
+        }
+        
         this._waitingMessage = new HashMap<>();
+        
         for (String aGroup : this._groups) {
             this._waitingMessage.put(aGroup, new LinkedList<Message>());
         }
@@ -89,20 +100,6 @@ public class ChatClientModel extends Thread implements IChat{
         this._chat.services.disconnect();
     }
 
-    public ArrayList<String> getGroupNames() { //Means the name of groups and not all the entity group
-        ArrayList<String> groupNames = new ArrayList<>();
-        try {
-            //Iterator it = (Iterator) this.getMemberGroups(getUserFromUserDaoImpl());
-            Iterator it = (Iterator) this.getUserFromUserDaoImpl().getGroups();
-            while (it.hasNext()){
-                groupNames.add(((Group)it.next()).getName());
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-        }    
-        return groupNames;
-    }
-    
    
     @Override
     public String getNextMessageIncomming(String group){
@@ -134,11 +131,45 @@ public class ChatClientModel extends Thread implements IChat{
         return groups;
     }
 
-    public ArrayList<String> getGroups() {
+    public List<String> getGroups() {
         return _groups;
     }
 
-    public void setGroups(ArrayList<String> _groups) {
+    public void setGroups(List<String> _groups) {
         this._groups = _groups;
     }
+
+    public Chat getChat() {
+        return _chat;
+    }
+
+    public void setChat(Chat _chat) {
+        this._chat = _chat;
+    }
+
+    public UserDAO getUserDAO() {
+        return _userDAO;
+    }
+
+    public void setUserDAO(UserDAO _userDAO) {
+        this._userDAO = _userDAO;
+    }
+
+    public UserGroupDAO getUserGroupDAO() {
+        return _userGroupDAO;
+    }
+
+    public void setUserGroupDAO(UserGroupDAO _userGroupDAO) {
+        this._userGroupDAO = _userGroupDAO;
+    }
+
+    public HashMap<String, LinkedList<Message>> getWaitingMessage() {
+        return _waitingMessage;
+    }
+
+    public void setWaitingMessage(HashMap<String, LinkedList<Message>> _waitingMessage) {
+        this._waitingMessage = _waitingMessage;
+    }
+    
+    
 }

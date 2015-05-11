@@ -5,6 +5,8 @@
  */
 package dao;
 
+import java.util.List;
+import m1.entity.Group;
 import m1.entity.User;
 
 /**
@@ -15,4 +17,6 @@ import m1.entity.User;
 public interface UserDAO {
     public boolean connection(String login, String password);
     public User getUser();
+    public List<Group> getMemberGroups();
+    public List<String> getMemberGroupsName();
 }  
