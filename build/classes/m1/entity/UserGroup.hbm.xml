@@ -3,7 +3,7 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated 10 mai 2015 22:43:49 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="m1.entity.UserGroup" lazy="false" table="user_group" catalog="m1" optimistic-lock="version">
+    <class name="m1.entity.UserGroup" lazy="false" table="user_group" catalog="cfollet" optimistic-lock="version">
         <composite-id name="id" class="m1.entity.UserGroupId">
             <key-property name="userId" type="int">
                 <column name="user_id" />

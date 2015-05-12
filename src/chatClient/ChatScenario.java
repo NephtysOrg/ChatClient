@@ -22,10 +22,6 @@ public class ChatScenario {
             System.err.println("[ERROR] while launching identification server: " + ex);
         }
         
-        //Lancement d'un premier client
-        ChatClientController chatClientController1 = new ChatClientController();  
-        chatClientController1.launch();
-        
         //Lancement d'un deuxieme client
         ChatClientController chatClientController2 = new ChatClientController();
         chatClientController2.launch();

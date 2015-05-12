@@ -18,7 +18,7 @@ public interface IIdentification {
    /**
     * Multicast port for contacting the identification server
     */
-   public final static int port = 5000;
+   public final static int port = 6970;
 
    /**
     * @return the identifier of the current process

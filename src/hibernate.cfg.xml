@@ -4,12 +4,10 @@
   <session-factory>
     <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/m1?zeroDateTimeBehavior=convertToNull</property>
-    <property name="hibernate.connection.username">root</property>
-    <property name="hibernate.connection.password">roltonunit@</property>
-    <property name="hibernate.show_sql">true</property>
-    <property name="hibernate.query.factory_class">org.hibernate.hql.internal.classic.ClassicQueryTranslatorFactory</property>
-    <mapping resource="m1/entity/Group.hbm.xml"/>
+    <property name="hibernate.connection.url">jdbc:mysql://scinfe102:3306/cfollet?zeroDateTimeBehavior=convertToNull</property>
+    <property name="hibernate.connection.username">cfollet</property>
+    <property name="hibernate.connection.password">cfollet</property>
+      <mapping resource="m1/entity/Group.hbm.xml"/>
     <mapping resource="m1/entity/UserGroup.hbm.xml"/>
     <mapping resource="m1/entity/User.hbm.xml"/>
     <mapping resource="m1/entity/Location.hbm.xml"/>
