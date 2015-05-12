@@ -8,8 +8,6 @@ package chatClient;
 import communication.Message;
 import dao.UserDAO;
 import dao.UserDAOImpl;
-import dao.UserGroupDAO;
-import dao.UserGroupDAOImpl;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -30,13 +28,11 @@ public class ChatClientModel extends Thread implements IChat{
     private String _identifier;
     private List<String> _groups;
     private UserDAO _userDAO;
-    private UserGroupDAO _userGroupDAO;
     private HashMap<String, LinkedList<Message> > _waitingMessage;
     
     public ChatClientModel(ChatClientController chatClientController){
         this._chatClientController = chatClientController;
         this._userDAO = new UserDAOImpl();
-        this._userGroupDAO = new UserGroupDAOImpl();
         _groups = new ArrayList<>();
     }
     
@@ -106,17 +102,6 @@ public class ChatClientModel extends Thread implements IChat{
     public User getUserFromUserDaoImpl(){
         return this._userDAO.getUser();
     }
-    
-    public List<Group> getMemberGroups(User user) {
-        List <UserGroup> listUserGroup = this._userGroupDAO.listUserGroups();
-        List<Group> groups = new ArrayList<>();
-        for (UserGroup ug : listUserGroup) {
-            if(!ug.getGroup().getUser().getId().equals(user.getId()) && ug.getUser().getId().equals(user.getId()) && ug.getSubscribed()== 0 && ug.getInvited()== 0){
-                groups.add(ug.getGroup());
-            }
-        }
-        return groups;
-    }
 
     public List<String> getGroups() {
         return _groups;
@@ -140,14 +125,6 @@ public class ChatClientModel extends Thread implements IChat{
 
     public void setUserDAO(UserDAO _userDAO) {
         this._userDAO = _userDAO;
-    }
-
-    public UserGroupDAO getUserGroupDAO() {
-        return _userGroupDAO;
-    }
-
-    public void setUserGroupDAO(UserGroupDAO _userGroupDAO) {
-        this._userGroupDAO = _userGroupDAO;
     }
 
     public HashMap<String, LinkedList<Message>> getWaitingMessage() {

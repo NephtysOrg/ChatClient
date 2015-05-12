@@ -5,10 +5,10 @@
  */
 package chatClient;
 
-
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
@@ -18,11 +18,16 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 
+
 /**
  *
  * @author rbary
  */
-public class ChatClientView extends javax.swing.JFrame {
+public class ChatClientView extends JFrame {
+    /**
+     * Creates new form ChatClientGUI
+     * @param chatClientController
+     */
     public ChatClientView(ChatClientController chatClientController) throws UnsupportedLookAndFeelException {
         this._chatClientController = chatClientController;
         this.groupsListModel = new javax.swing.DefaultListModel();
@@ -32,7 +37,7 @@ public class ChatClientView extends javax.swing.JFrame {
                         "2. You can create , join chat groups for this service\n" +
                         "3. Inquire credentials in the respective fields and then\n"+
                         "click Login or press the enter key\n" +
-                        "4. If you belong to the focus groups, a list of these groups will be displayed\n" +
+                        "4. If you belong to the focus groups,a list of these groups will be displayed\n" +
                         "5. Interact with this list to access the different chat room";
         try {
                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -41,12 +46,12 @@ public class ChatClientView extends javax.swing.JFrame {
                 } catch (IllegalAccessException ex) {
                 } catch (UnsupportedLookAndFeelException ex) {
         }
-
+    
         initComponents();
         this.GUIConnectionState();
     }
-
-     public JTextField getInputTextField() {
+    
+    public JTextField getInputTextField() {
         return inputTextField;
     }
 
@@ -171,68 +176,64 @@ public class ChatClientView extends javax.swing.JFrame {
         inputTextField = new javax.swing.JTextField();
         messageLabel = new javax.swing.JLabel();
         sendButton = new javax.swing.JButton();
-        chatTabbedPane = new javax.swing.JTabbedPane();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jScrollPane2 = new javax.swing.JScrollPane();
         groupsList = new javax.swing.JList();
-        jLabel1 = new javax.swing.JLabel();
+        chatTabbedPane = new javax.swing.JTabbedPane();
         logoLabel = new javax.swing.JLabel();
+        closeButton = new javax.swing.JButton();
         helpButton = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
 
-        
-        //**********************************************************************
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Chat++ Client");
+        setTitle("Client Chat++");
         setResizable(false);
         setSize(new java.awt.Dimension(745, 505));
-        //**********************************************************************
-        connexionPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Identification"));
+        //======================================================================
+        connexionPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), "Identification"));
         
-        //**********************************************************************
+        //======================================================================
         usernameLabel.setText("Username:");
-        //**********************************************************************
+        //======================================================================
         usernameTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 usernameTextFieldActionPerformed(evt);
             }
         });
-        //**********************************************************************
+        //======================================================================
         passwordLabel.setText("Password:");
-        //**********************************************************************
-        passwordField.setText("jPasswordField1");
+        //======================================================================
+        passwordField.setText("");
         passwordField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 passwordFieldActionPerformed(evt);
             }
         });
-        //**********************************************************************
+        //======================================================================
         loginButton.setText("Login");
         loginButton.setActionCommand("login");
         loginButton.addActionListener(new ChatClientEvent(_chatClientController));
-        
-        //**********************************************************************
+      
+        //======================================================================
         logoutButton.setText("Logout");
         logoutButton.setActionCommand("logout");
         logoutButton.addActionListener(new ChatClientEvent(_chatClientController));
-        
-        //**********************************************************************
+
+        //======================================================================
         javax.swing.GroupLayout connexionPanelLayout = new javax.swing.GroupLayout(connexionPanel);
         connexionPanel.setLayout(connexionPanelLayout);
         connexionPanelLayout.setHorizontalGroup(
             connexionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, connexionPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(connexionPanelLayout.createSequentialGroup()
                 .addComponent(usernameLabel)
                 .addGap(1, 1, 1)
-                .addComponent(usernameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(usernameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(passwordLabel)
                 .addGap(2, 2, 2)
-                .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(logoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(logoutButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         connexionPanelLayout.setVerticalGroup(
@@ -246,124 +247,109 @@ public class ChatClientView extends javax.swing.JFrame {
                     .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(loginButton)
                     .addComponent(logoutButton))
-                .addContainerGap())
+                .addGap(48, 48, 48))
         );
-        //**********************************************************************
-
-        chatPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Talking"));
-        //**********************************************************************
+        //======================================================================
+        chatPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), "Talking"));
+        //======================================================================
         inputTextField.setActionCommand("input");
         inputTextField.addActionListener(new ChatClientEvent(_chatClientController));
-        //**********************************************************************
+        //======================================================================
         messageLabel.setText("Message:");
-        //**********************************************************************
+        //======================================================================
         sendButton.setText("Send");
         sendButton.setActionCommand("send");
         sendButton.addActionListener(new ChatClientEvent(_chatClientController));
-        
-        //**********************************************************************
-        //jList1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+       
+        //======================================================================
         groupsList.setModel(groupsListModel);
-        jScrollPane1.setViewportView(groupsList);
+        jScrollPane2.setViewportView(groupsList);
         MouseListener mouseListener;
         mouseListener = new ChatClientMouseAdapter(this);
         groupsList.addMouseListener(mouseListener);
-
-        //**********************************************************************
-        jLabel1.setText("User Groups");
         
-        //**********************************************************************
+        //======================================================================
         javax.swing.GroupLayout chatPanelLayout = new javax.swing.GroupLayout(chatPanel);
         chatPanel.setLayout(chatPanelLayout);
         chatPanelLayout.setHorizontalGroup(
             chatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(chatPanelLayout.createSequentialGroup()
-                .addComponent(messageLabel)
-                .addGap(2, 2, 2)
-                .addComponent(inputTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(sendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(chatPanelLayout.createSequentialGroup()
-                .addComponent(chatTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 518, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addContainerGap()
                 .addGroup(chatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
                     .addGroup(chatPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(0, 57, Short.MAX_VALUE))))
+                        .addComponent(messageLabel)
+                        .addGap(14, 14, 14)
+                        .addComponent(inputTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(chatTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
+                .addGroup(chatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(sendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         chatPanelLayout.setVerticalGroup(
             chatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(chatPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(chatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(chatTabbedPane)
-                    .addGroup(chatPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(chatTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(chatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(inputTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(messageLabel)
                     .addComponent(sendButton))
-                .addGap(6, 6, 6))
+                .addContainerGap())
         );
-        
-        //**********************************************************************
-        logoLabel.setFont(new java.awt.Font("Ubuntu", 3, 16)); // NOI18N
+        //======================================================================
         logoLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/logo.png"))); // NOI18N
         logoLabel.setText("Chat ++");
+        //======================================================================
+        closeButton.setText("Close");
+        closeButton.setActionCommand("close");
+        closeButton.addActionListener(new ChatClientEvent(_chatClientController));
         
-        //**********************************************************************
+        //======================================================================
         helpButton.setText("Help");
-        helpButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                helpButtonActionPerformed(evt);
-            }
-        });
-        
-        //**********************************************************************
-        jButton1.setText("Close");
-        
-        //**********************************************************************
+        helpButton.setActionCommand("help");
+        helpButton.addActionListener(new ChatClientEvent(_chatClientController));
+     
+        //======================================================================
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(logoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(connexionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 562, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(helpButton, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(chatPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        
+                        .addComponent(helpButton, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(chatPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(logoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(connexionPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(connexionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(logoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(logoLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE)
+                    .addComponent(connexionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 66, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(chatPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(chatPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(helpButton)
-                    .addComponent(jButton1))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(helpButton)
+                .addGap(6, 6, 6))
         );
+        //======================================================================
         pack();
     }// </editor-fold>                        
 
@@ -394,25 +380,18 @@ public class ChatClientView extends javax.swing.JFrame {
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {                                           
         // TODO add your handling code here:
     }                                          
-    
-    public static void main(String args[]) throws UnsupportedLookAndFeelException {
-       ChatClientGUI myView = new ChatClientGUI();
-       myView.setVisible(true);
-    } 
-    
-    
+
+    //OLLDDDD
     //other variables declaration
-    // Variables declaration - do not modify
-    private ChatClientController _chatClientController;                    
+    private final ChatClientController _chatClientController;                  
     private javax.swing.JPanel chatPanel;
     private javax.swing.JTabbedPane chatTabbedPane;
     private javax.swing.JPanel connexionPanel;
+    private javax.swing.JList groupsList;
+    private javax.swing.JButton closeButton;
     private javax.swing.JButton helpButton;
     private javax.swing.JTextField inputTextField;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JList groupsList;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton loginButton;
     private javax.swing.JLabel logoLabel;
     private javax.swing.JButton logoutButton;
@@ -422,7 +401,7 @@ public class ChatClientView extends javax.swing.JFrame {
     private javax.swing.JButton sendButton;
     private javax.swing.JLabel usernameLabel;
     private javax.swing.JTextField usernameTextField;
-    
+      
     private javax.swing.AbstractListModel groupsListModel;
     private ArrayList<ChatTab> tabs;
     private String helpText;
