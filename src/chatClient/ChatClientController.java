@@ -7,6 +7,7 @@ package chatClient;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.UnsupportedLookAndFeelException;
 
 
 /**
@@ -14,13 +15,12 @@ import java.util.List;
  * @author rbary
  */
 public class ChatClientController {
-    private ChatClientView _chatClientView;
+    private final ChatClientView _chatClientView;
     private ChatClientModel _chatClientModel;
     private String _userId;
-
     List<String> _groupnames;
     
-    public ChatClientController(){
+    public ChatClientController() throws UnsupportedLookAndFeelException{
         this._groupnames = new ArrayList<>();
         this._chatClientView = new ChatClientView(this);
         this._chatClientModel = new ChatClientModel(this);
@@ -35,12 +35,14 @@ public class ChatClientController {
         if(this._chatClientModel == null){
             this._chatClientModel = new ChatClientModel(this);
         }
-        if(this._chatClientModel.connection(this._chatClientView.getUsernameTextField().getText(),new String(this._chatClientView.getPasswordField().getPassword()))){
+        
+        if(this._chatClientModel.connection(this._chatClientView.getUsernameTextField().getText(),new String(this._chatClientView.getPasswordField().getPassword()))){          
+            this._chatClientView.GUITalkingState();
+            this._chatClientView.showNotification("Login Success","Great ! You have been logged","notify");
             this._userId = this._chatClientView.getUsernameTextField().getText();
             this._chatClientModel.init(_userId);
             this._groupnames = this._chatClientModel.getUserDAO().getMemberGroupsName();
 
-            
             for (String groupname : _groupnames) {
                 System.out.println("Controller : "+groupname);
                 this._chatClientView.addEntryToGroupList(groupname);
@@ -53,7 +55,7 @@ public class ChatClientController {
             this._chatClientView.setVisibleGroupTab(o.toString());
             
         }else{       
-            this._chatClientView.showNotification("Connection error","The credentials are incorrect.","error");
+            this._chatClientView.showNotification("Connection Error","Sorry ! the credentials are incorrect.","error");
         }
     }
     
@@ -61,9 +63,8 @@ public class ChatClientController {
         this._chatClientModel.disconnection();
         this._chatClientModel = null;
         this._chatClientView.clearChatPanel();
-        this._chatClientView.showNotification("Logout","You have been disconnected.","notify");
-        //this._chatClientView.enableTalkingPanel(false);
-        //this._chatClientView.enableIdPanel(true);
+        this._chatClientView.GUIConnectionState();
+        this._chatClientView.showNotification("Logout","You have been disconnected.\n You can open an other session","notify");
     }
     
     public void sendMessage(){

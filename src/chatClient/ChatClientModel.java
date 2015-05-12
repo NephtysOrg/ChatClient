@@ -20,7 +20,6 @@ import m1.entity.UserGroup;
 import service.IChat;
 
 
-
 /**
  *
  * @author rbary
@@ -50,9 +49,7 @@ public class ChatClientModel extends Thread implements IChat{
     public void run(){
         this._chat = new Chat();
         this._chat.init();
-        this._groups = this._userDAO.getMemberGroupsName();
-        
-        
+        this._groups = this._userDAO.getMemberGroupsName(); 
         this._waitingMessage = new HashMap<>();
         
         for (String aGroup : this._groups) {
@@ -91,7 +88,6 @@ public class ChatClientModel extends Thread implements IChat{
         this._chat.services.disconnect();
     }
 
-   
     @Override
     public String getNextMessageIncomming(String group){
         Message msg = (Message) this._waitingMessage.get(group).poll();
@@ -161,6 +157,4 @@ public class ChatClientModel extends Thread implements IChat{
     public void setWaitingMessage(HashMap<String, LinkedList<Message>> _waitingMessage) {
         this._waitingMessage = _waitingMessage;
     }
-    
-    
 }

@@ -6,6 +6,7 @@
 package chatClient;
 
 import communication.CommunicationException;
+import javax.swing.UnsupportedLookAndFeelException;
 import service.id.IdentificationServer;
 
 /**
@@ -13,7 +14,7 @@ import service.id.IdentificationServer;
  * @author rbary
  */
 public class ChatScenario {
-     public static void main(String args[]) {
+     public static void main(String args[]) throws UnsupportedLookAndFeelException {
         //On lance un serveur
           try {
             IdentificationServer server = new IdentificationServer();

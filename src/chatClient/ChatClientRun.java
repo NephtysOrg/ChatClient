@@ -5,12 +5,14 @@
  */
 package chatClient;
 
+import javax.swing.UnsupportedLookAndFeelException;
+
 /**
  *
  * @author rbary
  */
 public class ChatClientRun {
-    public static void main(String args[]) {  
+    public static void main(String args[]) throws UnsupportedLookAndFeelException {  
         ChatClientController chatClientController1 = new ChatClientController();  
         chatClientController1.launch();
     }
